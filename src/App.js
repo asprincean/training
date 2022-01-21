@@ -1,15 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState } from "react";
-import ReactDOM from 'react-dom';
 
 function App() {
-  const name = 'Alex';
-  let age = 25;
-  let workplace = 'Leicester';
-  workplace = 'London';
-
-console.log(`After few months ${name} will live in ${workplace}`);
 
   return (
     <div className="App">
