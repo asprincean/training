@@ -1,4 +1,4 @@
-//initializing an object called person2 with two properties
+//initializing an object called person with two properties
 const person = {
     firstname: 'John', //firstname - is a key(name) associated with value 'John'
     lastname: 'Doe'
