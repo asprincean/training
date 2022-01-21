@@ -1,5 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
+import { useState } from "react";
+import ReactDOM from 'react-dom';
 
 function App() {
   const name = 'Alex';
@@ -30,4 +32,8 @@ console.log(`After few months ${name} will live in ${workplace}`);
   );
 }
 
-export default App;
+const numbers = [1, 2, 3, 4, 5];
+ReactDOM.render(
+  <NumberList numbers={numbers} />,
+  document.getElementById('root')
+);
