@@ -11,6 +11,7 @@ function App() {
         <p>
           Hey there!
         </p>
+        <p>After few months {name} will live in {workplace}</p>
         <a
           className="App-link"
           href="https://reactjs.org"
@@ -24,4 +25,8 @@ function App() {
   );
 }
 
-export default App;
+const numbers = [1, 2, 3, 4, 5];
+ReactDOM.render(
+  <NumberList numbers={numbers} />,
+  document.getElementById('root')
+);
