@@ -22,4 +22,4 @@ const person = {
   // expected output: "Siri"
   
   //delete
-  delete person.age;
+  delete person.age; 
