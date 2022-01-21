@@ -76,4 +76,4 @@ console.log(food.findIndex(isLargeNumber));
 const result = gas.filter(checkPrices);
 function checkPrices(gas) {
   return gas >= 18;
-} 
+}
