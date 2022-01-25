@@ -23,6 +23,6 @@ let person = {
         return this.firstName + ' ' + this.lastName;
     }
 };
-
+ 
 console.log(person.getFullName());
 //expected output: John Doe
