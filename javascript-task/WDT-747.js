@@ -75,7 +75,10 @@ console.log(food.findIndex(isLargeNumber));
 //filter - method creates a new array with all elements that pass the test implemented by the provided function
 const result = gas.filter(checkPrices);
 function checkPrices(gas) {
+
  return gas >= 18;
 
 }
 
+  return gas >= 18;
+}

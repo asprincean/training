@@ -14,9 +14,21 @@ console.log(greeting);
 const hour = new Date().getHours(); 
 let greeting;
 
+
 if (hour < 10) {
     greeting = "Good morning"; //to be executed if condition1 is true
   } else if (hour < 20) {
+
+
+if (hour < 10) {
+    greeting = "Good morning"; //to be executed if condition1 is true
+  } else if (hour < 20) {
+
+if (time < 10) {
+    greeting = "Good morning"; //to be executed if condition1 is true
+  } else if (time < 20) {
+
+
     greeting = "Good day"; //to be executed if the condition1 is false and condition2 is true
   } else {
     greeting = "Good evening"; //to be executed if the condition1 is false and condition2 is false
