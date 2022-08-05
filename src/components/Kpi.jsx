@@ -1,25 +1,34 @@
 import styled from 'styled-components';
 import numeral from 'numeral';
-import { MdOpacity } from 'react-icons/md';
 
 function Kpi({ currency }) {
-  const hour = new Date();
-  const current = hour.getHours() + ':' + hour.getMinutes();
+  // add function for formatting hour 09:00
+  function addZero(i) {
+    if (i < 10) {
+      i = '0' + i;
+    }
+    return i;
+  }
+  // get current time
+  const date = new Date();
+  let hour = addZero(date.getHours());
+  let minutes = addZero(date.getMinutes());
+  let currentTime = hour + ':' + minutes;
   const showTime = currency.time;
-  console.log(current);
+
+  // display time and kpi styling by current hour
   let time;
   let borderColor;
   let opacity;
-  if (showTime < current) {
+  if (showTime < currentTime) {
     time = 'Closed: ' + showTime;
     borderColor = '#1564B5';
     opacity = '0.6';
-  } else if (showTime > current) {
+  } else if (showTime > currentTime) {
     time = 'Closes: ' + showTime;
     borderColor = '#00847f';
   }
-
-  console.log(borderColor);
+  console.log(currentTime);
   return (
     <StyledWrapper borderColor={borderColor} opacity={opacity}>
       <StyledRow>
