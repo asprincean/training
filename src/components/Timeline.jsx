@@ -55,7 +55,7 @@ function Timeline() {
             timeOffset={getTimePercentage(hour.hour, 0)}
           >
             <StyledHourLine />
-            <StyledTime currentTime={currentTime}>{hour.time}</StyledTime>
+            <StyledTime>{hour.time}</StyledTime>
           </StyledHourContainer>
         ))}
         {hour && minute ? (
@@ -88,15 +88,15 @@ const StyledTimeLines = styled.div`
 const StyledHourLine = styled.div`
   height: 50px;
   width: 1px;
-  background-color: #d7d8d6;
+  background-color: #999ea2;
 `;
 
 const StyledTime = styled.p`
-  color: ${(props) => props.color};
   font-size: 1rem;
   margin: 5px 0 0 0;
   position: relative;
   transform: translateX(-50%);
+  color: #999ea2;
 `;
 
 const CurrentTimeLine = styled.div`
