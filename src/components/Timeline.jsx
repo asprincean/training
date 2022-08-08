@@ -26,7 +26,7 @@ function Timeline() {
   let hour = addZero(date.getHours());
   let minutes = addZero(date.getMinutes());
   let currentTime = hour + ':' + minutes;
-  const displayHour = '09:00';
+  const displayHour = hours[0].time
   // display time and line styling by current hour
   let time;
   let color;
