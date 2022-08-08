@@ -1,5 +1,5 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import moment from 'moment';
 
 function Timeline() {
   // add function for formatting hour 09:00
@@ -11,41 +11,60 @@ function Timeline() {
   }
   // Set hours
   const hours = [
-    { id: 1, time: '07:00' },
-    { id: 2, time: '09:00' },
-    { id: 3, time: '11:00' },
-    { id: 4, time: '13:00' },
-    { id: 5, time: '15:00' },
-    { id: 6, time: '17:00' },
-    { id: 7, time: '19:00' },
-    { id: 8, time: '21:00' },
-    { id: 9, time: '23:59' },
+    { hour: 7, time: '07:00' },
+    { hour: 9, time: '09:00' },
+    { hour: 11, time: '11:00' },
+    { hour: 13, time: '13:00' },
+    { hour: 15, time: '15:00' },
+    { hour: 17, time: '17:00' },
+    { hour: 19, time: '19:00' },
+    { hour: 21, time: '21:00' },
+    { hour: 24, time: '23:59' },
   ];
+
+  const [dateTime, setDateTime] = useState();
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setDateTime(new Date());
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
   // get current time
-  const date = new Date();
-  let hour = addZero(date.getHours());
-  let minutes = addZero(date.getMinutes());
-  let currentTime = hour + ':' + minutes;
-  const displayHour = '09:00';
-  // display time and line styling by current hour
-  let time;
-  let color;
-  if (displayHour === currentTime) {
-    time = currentTime;
-    color = '#FFBB33';
-  } else if (displayHour !== currentTime) {
-    time = displayHour;
-    color = '#d7d8d6';
-  }
+
+  let hour = addZero(dateTime?.getHours());
+  let minute = addZero(dateTime?.getMinutes());
+  let currentTime = hour + ':' + minute;
+  console.log(currentTime);
+  console.log(dateTime);
+
+  const getTimePercentage = (hour, minute) => {
+    return ((hour - 7) / 17 + minute / 60 / 17) * 100;
+  };
+
   return (
     <StyledWrapper>
-      <StyledTimeLines color={color} time={time}>
-        {hours.map((hour, id) => (
-          <div key={id} style={{ width: '0.5rem' }}>
+      <StyledTimeLines>
+        {hours.map((hour) => (
+          <StyledHourContainer
+            key={hour.hour}
+            timeOffset={getTimePercentage(hour.hour, 0)}
+          >
             <StyledHourLine />
             <StyledTime currentTime={currentTime}>{hour.time}</StyledTime>
-          </div>
+          </StyledHourContainer>
         ))}
+        {hour && minute ? (
+          <CurrentTimeLine
+            currentTimeOffset={getTimePercentage(hour, minute)}
+          />
+        ) : (
+          <></>
+        )}
       </StyledTimeLines>
     </StyledWrapper>
   );
@@ -58,15 +77,18 @@ const StyledWrapper = styled.div`
   height: 37px;
   background-color: #1d262c;
   margin-bottom: 30px;
+  border: #d7d8d65e solid 1px;
 `;
 
 const StyledTimeLines = styled.div`
   display: flex;
-  justify-content: space-between;
+
+  position: relative;
 `;
-const StyledHourLine = styled.span`
-  border-left: 1px solid ${(props) => props.color};
-  font-size: 2.5rem;
+const StyledHourLine = styled.div`
+  height: 50px;
+  width: 1px;
+  background-color: #d7d8d6;
 `;
 
 const StyledTime = styled.p`
@@ -74,5 +96,24 @@ const StyledTime = styled.p`
   font-size: 1rem;
   margin: 5px 0 0 0;
   position: relative;
-  right: 15px;
+  transform: translateX(-50%);
+`;
+
+const CurrentTimeLine = styled.div`
+  position: absolute;
+  left: ${(props) => `${props.currentTimeOffset}%`};
+  height: 50px;
+  width: 1.5px;
+  background-color: #ffbb33;
+  z-index: 200;
+  transform: translateY(-12px);
+`;
+
+const StyledHourContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  position: absolute;
+  left: ${(props) => `${props.timeOffset}%`};
+  z-index: 100;
 `;
