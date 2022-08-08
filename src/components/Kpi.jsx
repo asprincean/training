@@ -2,21 +2,21 @@ import styled from 'styled-components';
 import numeral from 'numeral';
 
 function Kpi({ currency }) {
-  // add function for formatting hour 09:00
+  // Add function for formatting hour 09:00
   function addZero(i) {
     if (i < 10) {
       i = '0' + i;
     }
     return i;
   }
-  // get current time
+  // Get current time
   const date = new Date();
   let hour = addZero(date.getHours());
   let minutes = addZero(date.getMinutes());
   let currentTime = hour + ':' + minutes;
   const showTime = currency.time;
 
-  // display time and kpi styling by current hour
+  // Display time and kpi styling by current hour
   let time;
   let borderColor;
   let opacity;

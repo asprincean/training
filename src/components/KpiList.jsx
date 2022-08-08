@@ -5,6 +5,7 @@ import currencyList from './../data/kpiData';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
 function KpiList() {
+  // Define functions slideLeft & slideRight for scrolling to the right/left
   const slideLeft = () => {
     inputRef.current.scrollLeft = inputRef.current.scrollLeft + 500;
   };
@@ -12,7 +13,7 @@ function KpiList() {
     inputRef.current.scrollLeft = inputRef.current.scrollLeft - 500;
   };
   const inputRef = useRef(null);
-
+  // Define function to add gradient for ChevronLeft & ChevronRight instead of using boxShadow
   const Gradient = ({ orientation }) => {
     if (orientation === 'right') {
       return (
@@ -48,7 +49,7 @@ function KpiList() {
     );
   };
   return (
-    <StyledWrapper>
+    <StyledContainer>
       <StyledSlider ref={inputRef}>
         {currencyList.map((currency) => (
           <Kpi currency={currency} key={currency.id} />
@@ -62,22 +63,21 @@ function KpiList() {
         <Gradient orientation="right" />
       </StyledChevronGradientContainerRight>
       <StyledChevronRight className="right" onClick={slideLeft} />
-    </StyledWrapper>
+    </StyledContainer>
   );
 }
 
 export default KpiList;
 
-const StyledWrapper = styled.div`
+const StyledContainer = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
   text-align: center;
   align-items: center;
   min-height: auto;
-  padding: 25px 40px 25px 40px;
-  max-width: 100vw;
-  background-color: #253038;
+  padding: 25px;
+  width: 95vw;
   color: white;
 `;
 
@@ -122,7 +122,6 @@ const StyledChevronRight = styled(MdChevronRight)`
   width: 30px;
   cursor: pointer;
   margin-left: 15px;
-  /* box-shadow: -5px 0px 15px #00000082; */
   transition: 0.3s;
   :hover {
     opacity: 0.6;
