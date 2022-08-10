@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import currencyList from './../data/kpiData';
+import Diamond from './Diamond';
 
 function Timeline() {
   // add function for formatting hour 09:00
@@ -24,10 +26,12 @@ function Timeline() {
 
   const [dateTime, setDateTime] = useState();
 
+  // Create interval to set time every minute
   React.useEffect(() => {
+    setDateTime(new Date());
     const timer = setInterval(() => {
       setDateTime(new Date());
-    }, 1000);
+    }, 60000);
 
     return () => {
       clearInterval(timer);
@@ -35,17 +39,49 @@ function Timeline() {
   }, []);
 
   // get current time
-
   let hour = addZero(dateTime?.getHours());
   let minute = addZero(dateTime?.getMinutes());
   let currentTime = hour + ':' + minute;
   console.log(currentTime);
   console.log(dateTime);
 
+  // set position for timelines
   const getTimePercentage = (hour, minute) => {
     return ((hour - 7) / 17 + minute / 60 / 17) * 100;
   };
 
+  // count number of occurrences of repeated times
+  function findOcc(currencyList, key) {
+    let arr2 = [];
+
+    currencyList.forEach((x) => {
+      // Checking if there is any object in arr2
+      // which contains the key value
+      if (
+        arr2.some((val) => {
+          return val[key] == x[key];
+        })
+      ) {
+        // If yes! then increase the occurrence by 1
+        arr2.forEach((k) => {
+          if (k[key] === x[key]) {
+            k['occurrence']++;
+          }
+        });
+      } else {
+        // If not! Then create a new object initialize
+        // it with the present iteration key's value and
+        // set the occurrence to 1
+        let a = {};
+        a[key] = x[key];
+        a['occurrence'] = 1;
+        arr2.push(a);
+      }
+    });
+
+    return arr2;
+  }
+  let key = 'time';
   return (
     <StyledWrapper>
       <StyledTimeLines>
@@ -59,12 +95,21 @@ function Timeline() {
           </StyledHourContainer>
         ))}
         {hour && minute ? (
-          <CurrentTimeLine
+          <StyledCurrentHourContainer
             currentTimeOffset={getTimePercentage(hour, minute)}
-          />
+          >
+            <CurrentTimeLine />
+            <StyledCurrentTime>{currentTime}</StyledCurrentTime>
+          </StyledCurrentHourContainer>
         ) : (
           <></>
         )}
+        <div>
+          <Diamond
+            findOcc={findOcc(currencyList, key)}
+            currentTime={currentTime}
+          />
+        </div>
       </StyledTimeLines>
     </StyledWrapper>
   );
@@ -76,13 +121,12 @@ const StyledWrapper = styled.div`
   width: 95vw;
   height: 37px;
   background-color: #1d262c;
-  margin-bottom: 30px;
+  margin: 20px 0 30px 0;
   border: #d7d8d65e solid 1px;
 `;
 
 const StyledTimeLines = styled.div`
   display: flex;
-
   position: relative;
 `;
 const StyledHourLine = styled.div`
@@ -99,9 +143,16 @@ const StyledTime = styled.p`
   color: #999ea2;
 `;
 
+const StyledCurrentTime = styled.p`
+  font-size: 1rem;
+  margin: 5px 0 0 0;
+  position: relative;
+  transform: translate(-16px, -40px);
+  color: #ffbb33;
+`;
+
 const CurrentTimeLine = styled.div`
   position: absolute;
-  left: ${(props) => `${props.currentTimeOffset}%`};
   height: 50px;
   width: 1.5px;
   background-color: #ffbb33;
@@ -113,7 +164,13 @@ const StyledHourContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  position: absolute;
   left: ${(props) => `${props.timeOffset}%`};
+  z-index: 100;
+`;
+const StyledCurrentHourContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: ${(props) => `${props.currentTimeOffset}%`};
   z-index: 100;
 `;

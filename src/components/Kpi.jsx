@@ -29,6 +29,7 @@ function Kpi({ currency }) {
     borderColor = '#00847f';
   }
   console.log(currentTime);
+ 
   return (
     <StyledWrapper borderColor={borderColor} opacity={opacity}>
       <StyledRow>
@@ -73,7 +74,6 @@ function Kpi({ currency }) {
 }
 
 export default Kpi;
-
 const StyledWrapper = styled.div`
   display: inline-block;
   border: 3px solid ${(props) => props.borderColor};

@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 import KpiList from './components/KpiList';
 import Timeline from './components/Timeline';
+import { useState } from 'react';
 
 function App() {
+  const [selectedCard, setSelectedCard] = useState(false);
+
   return (
     <StyledWrapper className="App">
       <Timeline />

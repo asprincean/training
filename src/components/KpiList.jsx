@@ -48,6 +48,7 @@ function KpiList() {
       </svg>
     );
   };
+
   return (
     <StyledContainer>
       <StyledSlider ref={inputRef}>
