@@ -8,8 +8,14 @@ function App() {
 
   return (
     <StyledWrapper className="App">
-      <Timeline />
-      <KpiList selectedCurrencyIds={selectedCurrencyIds} setSelectedCurrencyIds={setSelectedCurrencyIds}  />
+      <Timeline
+        selectedCurrencyIds={selectedCurrencyIds}
+        setSelectedCurrencyIds={setSelectedCurrencyIds}
+      />
+      <KpiList
+        selectedCurrencyIds={selectedCurrencyIds}
+        setSelectedCurrencyIds={setSelectedCurrencyIds}
+      />
     </StyledWrapper>
   );
 }

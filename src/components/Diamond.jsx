@@ -1,11 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function Diamond({ groupData, getTimePercentage, currentTime }) {
+function Diamond({
+  groupData,
+  getTimePercentage,
+  currentTime,
+  selectedCurrencyIds,
+  setSelectedCurrencyIds,
+}) {
+  const handleClick = (e) => {
+    e.preventDefault();
+    setSelectedCurrencyIds([groupData.data[0].id]);
+  };
   const splitTime = groupData.time.split(':');
   const hour = Number(splitTime[0]);
   const minute = Number(splitTime[1]);
-
   let state = 'open';
   if (currentTime < groupData.time) {
     state = 'open';
@@ -13,7 +22,9 @@ function Diamond({ groupData, getTimePercentage, currentTime }) {
   if (currentTime >= groupData.time) {
     state = 'closed';
   }
-
+  if (selectedCurrencyIds[0] === groupData.data[0].id) {
+    state = 'selected';
+  }
   const getColors = () => {
     switch (state) {
       case 'closed':
@@ -26,7 +37,11 @@ function Diamond({ groupData, getTimePercentage, currentTime }) {
           backgroundColor: '#00847f',
           textColor: 'white',
         };
-
+      case 'selected':
+        return {
+          backgroundColor: '#ffff',
+          textColor: '#333333',
+        };
       default:
         return {
           backgroundColor: 'blue',
@@ -34,12 +49,16 @@ function Diamond({ groupData, getTimePercentage, currentTime }) {
         };
     }
   };
+
   return (
     <StyledDiamondShape
+      onClick={handleClick}
       timeOffset={getTimePercentage(hour, minute)}
       backgroundColor={getColors().backgroundColor}
     >
-      <StyledItemCount>{groupData.data.length}</StyledItemCount>
+      <StyledItemCount color={getColors().textColor}>
+        {groupData.data.length}
+      </StyledItemCount>
     </StyledDiamondShape>
   );
 }
@@ -59,10 +78,10 @@ const StyledDiamondShape = styled.div`
   width: 25px;
   left: ${(props) => `${props.timeOffset}%`};
   z-index: 100;
+  cursor: pointer;
 `;
 const StyledItemCount = styled.div`
-  color: white;
-
+  color: ${(props) => props.color};
   transform: rotate(-45deg);
   margin: auto;
 `;

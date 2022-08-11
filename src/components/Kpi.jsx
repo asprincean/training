@@ -20,19 +20,38 @@ function Kpi({ currency, selectedCurrencyIds, setSelectedCurrencyIds }) {
   let time;
   let borderColor;
   let opacity;
+  let width;
+  let height;
   if (showTime < currentTime) {
     time = 'Closed: ' + showTime;
     borderColor = '#1564B5';
     opacity = '0.6';
+    width = '290px';
+    height = '175px';
   } else if (showTime > currentTime) {
     time = 'Closes: ' + showTime;
     borderColor = '#00847f';
+    width = '290px';
+    height = '175px';
+  } else {
+    //Background Grey
   }
+  if (selectedCurrencyIds[0] === currency.id) {
+    borderColor = '#ffff';
+    width = '322px';
+    height = '193px';
+  }
+  const handleClick = (e) => {
+    e.preventDefault();
+    setSelectedCurrencyIds([currency.id]);
+  };
 
   return (
     <StyledWrapper
-      onClick={() => selectedCurrencyIds([currency.id])}
+      onClick={handleClick}
       borderColor={borderColor}
+      width={width}
+      height={height}
       opacity={opacity}
     >
       <StyledRow>
@@ -83,8 +102,8 @@ const StyledWrapper = styled.div`
   border: 3px solid ${(props) => props.borderColor};
   padding: 0 20px;
   min-width: 290px;
-  width: 290px;
-  height: 175px;
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
   margin: auto 15px auto 0;
   box-shadow: 2px 2px 2px rgb(0 0 0 / 12%);
   transition: 0.3s;
