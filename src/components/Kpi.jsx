@@ -28,7 +28,6 @@ function Kpi({ currency }) {
     time = 'Closes: ' + showTime;
     borderColor = '#00847f';
   }
-  console.log(currentTime);
  
   return (
     <StyledWrapper borderColor={borderColor} opacity={opacity}>
@@ -80,7 +79,7 @@ const StyledWrapper = styled.div`
   padding: 0 20px;
   width: 290px;
   height: 175px;
-  margin: 0 15px 0 0;
+  margin: auto 15px auto 0;
   box-shadow: 2px 2px 2px rgb(0 0 0 / 12%);
   transition: 0.3s;
   opacity: ${(props) => props.opacity};

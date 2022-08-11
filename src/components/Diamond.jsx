@@ -1,15 +1,46 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function Diamond({ findOcc, getTimePercentage }) {
+function Diamond({ groupData, getTimePercentage, currentTime }) {
+  const splitTime = groupData.time.split(':');
+  const hour = Number(splitTime[0]);
+  const minute = Number(splitTime[1]);
+
+  let state = 'open';
+  if (currentTime < groupData.time) {
+    state = 'open';
+  }
+  if (currentTime >= groupData.time) {
+    state = 'closed';
+  }
+
+  const getColors = () => {
+    switch (state) {
+      case 'closed':
+        return {
+          backgroundColor: '#1c4f83',
+          textColor: 'white',
+        };
+      case 'open':
+        return {
+          backgroundColor: '#00847f',
+          textColor: 'white',
+        };
+
+      default:
+        return {
+          backgroundColor: 'blue',
+          textColor: 'white',
+        };
+    }
+  };
   return (
-    <div>
-      {findOcc.map((item) => (
-        <StyledDiamondShape>
-          <StyledItemCount>{item.occurrence}</StyledItemCount>
-        </StyledDiamondShape>
-      ))}
-    </div>
+    <StyledDiamondShape
+      timeOffset={getTimePercentage(hour, minute)}
+      backgroundColor={getColors().backgroundColor}
+    >
+      <StyledItemCount>{groupData.data.length}</StyledItemCount>
+    </StyledDiamondShape>
   );
 }
 
@@ -19,20 +50,19 @@ const StyledDiamondShape = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  left: 16.7%;
   z-index: 100;
-  background: #00847f;
+  background-color: ${(props) => props.backgroundColor};
   height: 25px;
   top: 6px;
-  transform: rotate(45deg);
+  transform-origin: left;
+  transform: rotate(45deg) translateX(-50%);
   width: 25px;
+  left: ${(props) => `${props.timeOffset}%`};
+  z-index: 100;
 `;
 const StyledItemCount = styled.div`
   color: white;
-  height: 25px;
-  position: absolute;
-  top: 10%;
-  left: 5%;
+
   transform: rotate(-45deg);
-  width: 25px;
+  margin: auto;
 `;

@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import { useRef } from 'react';
 import Kpi from './Kpi';
-import currencyList from './../data/kpiData';
+import { default as mockCurrencyList } from './../data/kpiData';
+import useWebsocket from '../utils/useWebsocket';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
 function KpiList() {
+  const { currencyList } = useWebsocket();
   // Define functions slideLeft & slideRight for scrolling to the right/left
   const slideLeft = () => {
     inputRef.current.scrollLeft = inputRef.current.scrollLeft + 500;
@@ -51,11 +53,20 @@ function KpiList() {
 
   return (
     <StyledContainer>
-      <StyledSlider ref={inputRef}>
-        {currencyList.map((currency) => (
-          <Kpi currency={currency} key={currency.id} />
-        ))}
-      </StyledSlider>
+      {currencyList.length > 0 ? (
+        <StyledSlider ref={inputRef}>
+          {currencyList.map((currency) => (
+            <Kpi currency={currency} key={currency.id} />
+          ))}
+        </StyledSlider>
+      ) : (
+        // probably needs to be replaced by a loading state?
+        <StyledSlider ref={inputRef}>
+          {mockCurrencyList.map((currency) => (
+            <Kpi currency={currency} key={currency.id} />
+          ))}
+        </StyledSlider>
+      )}
       <StyledChevronGradientContainerLeft>
         <Gradient orientation="left" />
       </StyledChevronGradientContainerLeft>
@@ -84,7 +95,8 @@ const StyledContainer = styled.div`
 
 const StyledSlider = styled.div`
   width: 100%;
-  height: 100%;
+  height: 200px;
+  
   white-space: nowrap;
   overflow-x: scroll;
   scrollbar-width: none;

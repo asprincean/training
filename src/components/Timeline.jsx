@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import currencyList from './../data/kpiData';
+/* import currencyList from './../data/kpiData'; */
 import Diamond from './Diamond';
+import useWebsocket from '../utils/useWebsocket';
 
 function Timeline() {
+  const { currencyList } = useWebsocket();
   // add function for formatting hour 09:00
   function addZero(i) {
     if (i < 10) {
@@ -42,46 +44,26 @@ function Timeline() {
   let hour = addZero(dateTime?.getHours());
   let minute = addZero(dateTime?.getMinutes());
   let currentTime = hour + ':' + minute;
-  console.log(currentTime);
-  console.log(dateTime);
 
   // set position for timelines
   const getTimePercentage = (hour, minute) => {
     return ((hour - 7) / 17 + minute / 60 / 17) * 100;
   };
 
-  // count number of occurrences of repeated times
-  function findOcc(currencyList, key) {
-    let arr2 = [];
-
-    currencyList.forEach((x) => {
-      // Checking if there is any object in arr2
-      // which contains the key value
-      if (
-        arr2.some((val) => {
-          return val[key] == x[key];
-        })
-      ) {
-        // If yes! then increase the occurrence by 1
-        arr2.forEach((k) => {
-          if (k[key] === x[key]) {
-            k['occurrence']++;
-          }
-        });
-      } else {
-        // If not! Then create a new object initialize
-        // it with the present iteration key's value and
-        // set the occurrence to 1
-        let a = {};
-        a[key] = x[key];
-        a['occurrence'] = 1;
-        arr2.push(a);
-      }
-    });
-
-    return arr2;
+  const groupedCurrencies = {};
+  currencyList.forEach((item) => {
+    const time = item.time;
+    if (groupedCurrencies[time] === undefined) {
+      groupedCurrencies[time] = [];
+    }
+    groupedCurrencies[time].push(item);
+  });
+  
+  const groupedCurrencyList = [];
+  for (const [key, value] of Object.entries(groupedCurrencies)) {
+    groupedCurrencyList.push({ time: key, data: value });
   }
-  let key = 'time';
+
   return (
     <StyledWrapper>
       <StyledTimeLines>
@@ -104,12 +86,10 @@ function Timeline() {
         ) : (
           <></>
         )}
-        <div>
-          <Diamond
-            findOcc={findOcc(currencyList, key)}
-            currentTime={currentTime}
-          />
-        </div>
+
+        {groupedCurrencyList.map((item) => (
+          <Diamond key={item.time} groupData={item} getTimePercentage={getTimePercentage} currentTime={currentTime} />
+        ))}
       </StyledTimeLines>
     </StyledWrapper>
   );
