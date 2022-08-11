@@ -4,12 +4,12 @@ import Timeline from './components/Timeline';
 import { useState } from 'react';
 
 function App() {
-  const [selectedCard, setSelectedCard] = useState(false);
+  const [selectedCurrencyIds, setSelectedCurrencyIds] = useState([]);
 
   return (
     <StyledWrapper className="App">
       <Timeline />
-      <KpiList />
+      <KpiList selectedCurrencyIds={selectedCurrencyIds} setSelectedCurrencyIds={setSelectedCurrencyIds}  />
     </StyledWrapper>
   );
 }

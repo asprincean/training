@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import numeral from 'numeral';
 
-function Kpi({ currency }) {
+function Kpi({ currency, selectedCurrencyIds, setSelectedCurrencyIds }) {
   // Add function for formatting hour 09:00
   function addZero(i) {
     if (i < 10) {
@@ -28,9 +28,13 @@ function Kpi({ currency }) {
     time = 'Closes: ' + showTime;
     borderColor = '#00847f';
   }
- 
+
   return (
-    <StyledWrapper borderColor={borderColor} opacity={opacity}>
+    <StyledWrapper
+      onClick={() => selectedCurrencyIds([currency.id])}
+      borderColor={borderColor}
+      opacity={opacity}
+    >
       <StyledRow>
         <StyledTitle>{currency.title}</StyledTitle>
         <StyledTime>{time}</StyledTime>
@@ -74,9 +78,11 @@ function Kpi({ currency }) {
 
 export default Kpi;
 const StyledWrapper = styled.div`
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
   border: 3px solid ${(props) => props.borderColor};
   padding: 0 20px;
+  min-width: 290px;
   width: 290px;
   height: 175px;
   margin: auto 15px auto 0;
