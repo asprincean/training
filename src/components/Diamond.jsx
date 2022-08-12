@@ -67,7 +67,9 @@ function Diamond({
         timeOffset={getTimePercentage(hour, minute)}
         backgroundColor={getColors().backgroundColor}
       >
-        <StyledItemCount>{groupData.data.length}</StyledItemCount>
+        <StyledItemCount color={getColors().textColor}>
+          {groupData.data.length}
+        </StyledItemCount>
       </StyledDiamondShape>
     </TooltipProvider>
   );
