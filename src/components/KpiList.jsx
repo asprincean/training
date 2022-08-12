@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 import { useRef } from 'react';
 import Kpi from './Kpi';
-import currencyList from './../data/kpiData';
+import { default as mockCurrencyList } from './../data/kpiData';
+import useWebsocket from '../utils/useWebsocket';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
-function KpiList() {
+function KpiList({ selectedCurrencyIds, setSelectedCurrencyIds }) {
+  const { currencyList } = useWebsocket();
+  // Define functions slideLeft & slideRight for scrolling to the right/left
   const slideLeft = () => {
     inputRef.current.scrollLeft = inputRef.current.scrollLeft + 500;
   };
@@ -12,7 +15,7 @@ function KpiList() {
     inputRef.current.scrollLeft = inputRef.current.scrollLeft - 500;
   };
   const inputRef = useRef(null);
-
+  // Define function to add gradient for ChevronLeft & ChevronRight instead of using boxShadow
   const Gradient = ({ orientation }) => {
     if (orientation === 'right') {
       return (
@@ -47,13 +50,28 @@ function KpiList() {
       </svg>
     );
   };
+
   return (
-    <StyledWrapper>
-      <StyledSlider ref={inputRef}>
-        {currencyList.map((currency) => (
-          <Kpi currency={currency} key={currency.id} />
-        ))}
-      </StyledSlider>
+    <StyledContainer>
+      {currencyList.length > 0 ? (
+        <StyledSlider ref={inputRef}>
+          {currencyList.map((currency) => (
+            <Kpi
+              currency={currency}
+              key={currency.id}
+              selectedCurrencyIds={selectedCurrencyIds}
+              setSelectedCurrencyIds={setSelectedCurrencyIds}
+            />
+          ))}
+        </StyledSlider>
+      ) : (
+        // probably needs to be replaced by a loading state?
+        <StyledSlider ref={inputRef}>
+          {mockCurrencyList.map((currency) => (
+            <Kpi currency={currency} key={currency.id} />
+          ))}
+        </StyledSlider>
+      )}
       <StyledChevronGradientContainerLeft>
         <Gradient orientation="left" />
       </StyledChevronGradientContainerLeft>
@@ -62,28 +80,24 @@ function KpiList() {
         <Gradient orientation="right" />
       </StyledChevronGradientContainerRight>
       <StyledChevronRight className="right" onClick={slideLeft} />
-    </StyledWrapper>
+    </StyledContainer>
   );
 }
 
 export default KpiList;
 
-const StyledWrapper = styled.div`
+const StyledContainer = styled.div`
   position: relative;
   display: flex;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-  min-height: auto;
-  padding: 25px 40px 25px 40px;
-  max-width: 100vw;
-  background-color: #253038;
+  margin: 1rem auto auto auto;
+  width: 95vw;
   color: white;
 `;
 
 const StyledSlider = styled.div`
   width: 100%;
-  height: 100%;
+  height: 225px;
+  display: flex;
   white-space: nowrap;
   overflow-x: scroll;
   scrollbar-width: none;
@@ -95,7 +109,8 @@ const StyledSlider = styled.div`
 
 const StyledChevronLeft = styled(MdChevronLeft)`
   position: absolute;
-  left: 25px;
+  left: 0px;
+  margin: auto;
   font-size: 50px;
   background-color: #253038;
   border: 1px solid #ffffff;
@@ -104,16 +119,19 @@ const StyledChevronLeft = styled(MdChevronLeft)`
   margin-right: 15px;
   cursor: pointer;
   box-shadow: 5px 0px 15px #00000082;
+  top: 50%;
+  transform: translateY(-50%);
   transition: 0.3s;
+  transform-origin: top;
   :hover {
     opacity: 0.6;
-    transform: scale(1.2);
+    transform: scale(1.1) translateY(-50%);
   }
 `;
 
 const StyledChevronRight = styled(MdChevronRight)`
   position: absolute;
-  right: 25px;
+  right: 0px;
   margin: auto;
   font-size: 50px;
   background-color: #253038;
@@ -122,24 +140,26 @@ const StyledChevronRight = styled(MdChevronRight)`
   width: 30px;
   cursor: pointer;
   margin-left: 15px;
-  /* box-shadow: -5px 0px 15px #00000082; */
+  top: 50%;
+  transform: translateY(-50%);
   transition: 0.3s;
+  transform-origin: top;
   :hover {
     opacity: 0.6;
-    transform: scale(1.2);
+    transform: scale(1.1) translateY(-50%);
   }
 `;
 
 const StyledChevronGradientContainerLeft = styled.div`
   position: absolute;
-  left: 25px;
+  left: 0px;
   height: 100%;
   display: flex;
 `;
 
 const StyledChevronGradientContainerRight = styled.div`
   position: absolute;
-  right: 25px;
+  right: 0px;
   height: 100%;
   display: flex;
 `;

@@ -1,36 +1,60 @@
 import styled from 'styled-components';
 import numeral from 'numeral';
 
-function Kpi({ currency }) {
-  // add function for formatting hour 09:00
+function Kpi({ currency, selectedCurrencyIds, setSelectedCurrencyIds }) {
+  // Add function for formatting hour 09:00
   function addZero(i) {
     if (i < 10) {
       i = '0' + i;
     }
     return i;
   }
-  // get current time
+  // Get current time
   const date = new Date();
   let hour = addZero(date.getHours());
   let minutes = addZero(date.getMinutes());
   let currentTime = hour + ':' + minutes;
   const showTime = currency.time;
 
-  // display time and kpi styling by current hour
+  // Display time and kpi styling by current hour
   let time;
   let borderColor;
   let opacity;
+  let width;
+  let height;
   if (showTime < currentTime) {
     time = 'Closed: ' + showTime;
     borderColor = '#1564B5';
     opacity = '0.6';
+    width = '290px';
+    height = '175px';
   } else if (showTime > currentTime) {
     time = 'Closes: ' + showTime;
     borderColor = '#00847f';
+    width = '290px';
+    height = '175px';
+  } else {
+    //Background Grey
   }
-  console.log(currentTime);
+
+  if (selectedCurrencyIds && selectedCurrencyIds[0] === currency.id) {
+    borderColor = '#ffff';
+    width = '322px';
+    height = '193px';
+  }
+  const handleClick = (e) => {
+    e.preventDefault();
+    setSelectedCurrencyIds([currency.id]);
+  };
+
   return (
-    <StyledWrapper borderColor={borderColor} opacity={opacity}>
+    <StyledWrapper
+      onClick={handleClick}
+      borderColor={borderColor}
+      width={width}
+      height={height}
+      opacity={opacity}
+    >
       <StyledRow>
         <StyledTitle>{currency.title}</StyledTitle>
         <StyledTime>{time}</StyledTime>
@@ -73,14 +97,15 @@ function Kpi({ currency }) {
 }
 
 export default Kpi;
-
 const StyledWrapper = styled.div`
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
   border: 3px solid ${(props) => props.borderColor};
   padding: 0 20px;
-  width: 290px;
-  height: 175px;
-  margin: 0 15px 0 0;
+  min-width: 290px;
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  margin: auto 15px auto 0;
   box-shadow: 2px 2px 2px rgb(0 0 0 / 12%);
   transition: 0.3s;
   opacity: ${(props) => props.opacity};
