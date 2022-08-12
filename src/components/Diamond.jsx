@@ -3,11 +3,20 @@ import styled from 'styled-components';
 import TooltipProvider from './TooltipProvider';
 import TooltipContents from './TooltipContents';
 
-function Diamond({ groupData, getTimePercentage, currentTime }) {
+function Diamond({
+  groupData,
+  getTimePercentage,
+  currentTime,
+  selectedCurrencyIds,
+  setSelectedCurrencyIds,
+}) {
+  const handleClick = (e) => {
+    e.preventDefault();
+    setSelectedCurrencyIds([groupData.data[0].id]);
+  };
   const splitTime = groupData.time.split(':');
   const hour = Number(splitTime[0]);
   const minute = Number(splitTime[1]);
-
   let state = 'open';
   if (currentTime < groupData.time) {
     state = 'open';
@@ -15,7 +24,9 @@ function Diamond({ groupData, getTimePercentage, currentTime }) {
   if (currentTime >= groupData.time) {
     state = 'closed';
   }
-
+  if (selectedCurrencyIds[0] === groupData.data[0].id) {
+    state = 'selected';
+  }
   const getColors = () => {
     switch (state) {
       case 'closed':
@@ -28,7 +39,11 @@ function Diamond({ groupData, getTimePercentage, currentTime }) {
           backgroundColor: '#00847f',
           textColor: 'white',
         };
-
+      case 'selected':
+        return {
+          backgroundColor: '#ffff',
+          textColor: '#333333',
+        };
       default:
         return {
           backgroundColor: 'blue',
@@ -36,6 +51,7 @@ function Diamond({ groupData, getTimePercentage, currentTime }) {
         };
     }
   };
+
   return (
     <TooltipProvider
       tooltipContents={<TooltipContents groupData={groupData} />}
@@ -47,6 +63,7 @@ function Diamond({ groupData, getTimePercentage, currentTime }) {
       /* backgroundColor="blue" */
     >
       <StyledDiamondShape
+        onClick={handleClick}
         timeOffset={getTimePercentage(hour, minute)}
         backgroundColor={getColors().backgroundColor}
       >
@@ -74,8 +91,7 @@ const StyledDiamondShape = styled.div`
   cursor: pointer;
 `;
 const StyledItemCount = styled.div`
-  color: white;
-
+  color: ${(props) => props.color};
   transform: rotate(-45deg);
   margin: auto;
   pointer-events: none;

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Diamond from './Diamond';
 import useWebsocket from '../utils/useWebsocket';
 
-function Timeline() {
+function Timeline({ selectedCurrencyIds, setSelectedCurrencyIds }) {
   const { currencyList } = useWebsocket();
   // add function for formatting hour 09:00
   function addZero(i) {
@@ -58,12 +58,11 @@ function Timeline() {
     }
     groupedCurrencies[time].push(item);
   });
-  
+
   const groupedCurrencyList = [];
   for (const [key, value] of Object.entries(groupedCurrencies)) {
     groupedCurrencyList.push({ time: key, data: value });
   }
-
   return (
     <StyledWrapper>
       <StyledTimeLines>
@@ -88,7 +87,14 @@ function Timeline() {
         )}
 
         {groupedCurrencyList.map((item) => (
-          <Diamond key={item.time} groupData={item} getTimePercentage={getTimePercentage} currentTime={currentTime} />
+          <Diamond
+            key={item.time}
+            groupData={item}
+            getTimePercentage={getTimePercentage}
+            currentTime={currentTime}
+            selectedCurrencyIds={selectedCurrencyIds}
+            setSelectedCurrencyIds={setSelectedCurrencyIds}
+          />
         ))}
       </StyledTimeLines>
     </StyledWrapper>
