@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import TooltipProvider from './TooltipProvider';
+import TooltipContents from './TooltipContents';
 
 function Diamond({
   groupData,
@@ -51,15 +53,23 @@ function Diamond({
   };
 
   return (
-    <StyledDiamondShape
-      onClick={handleClick}
-      timeOffset={getTimePercentage(hour, minute)}
-      backgroundColor={getColors().backgroundColor}
+    <TooltipProvider
+      tooltipContents={<TooltipContents groupData={groupData} />}
+      orientation="left"
+      /* text="test"
+      textStyle={{ color: 'black' }} */
+      /* style={{ padding: '1rem' }} */
+      /* borderColor="black" */
+      /* backgroundColor="blue" */
     >
-      <StyledItemCount color={getColors().textColor}>
-        {groupData.data.length}
-      </StyledItemCount>
-    </StyledDiamondShape>
+      <StyledDiamondShape
+        onClick={handleClick}
+        timeOffset={getTimePercentage(hour, minute)}
+        backgroundColor={getColors().backgroundColor}
+      >
+        <StyledItemCount>{groupData.data.length}</StyledItemCount>
+      </StyledDiamondShape>
+    </TooltipProvider>
   );
 }
 
@@ -84,4 +94,5 @@ const StyledItemCount = styled.div`
   color: ${(props) => props.color};
   transform: rotate(-45deg);
   margin: auto;
+  pointer-events: none;
 `;
