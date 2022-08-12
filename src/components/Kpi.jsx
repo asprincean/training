@@ -36,7 +36,8 @@ function Kpi({ currency, selectedCurrencyIds, setSelectedCurrencyIds }) {
   } else {
     //Background Grey
   }
-  if (selectedCurrencyIds[0] === currency.id) {
+
+  if (selectedCurrencyIds && selectedCurrencyIds[0] === currency.id) {
     borderColor = '#ffff';
     width = '322px';
     height = '193px';
