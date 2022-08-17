@@ -2,10 +2,11 @@ import styled from 'styled-components';
 import KpiList from './components/KpiList';
 import Timeline from './components/Timeline';
 import { useState } from 'react';
+import BarChart from './components/barchart';
 
 function App() {
   const [selectedCurrencyIds, setSelectedCurrencyIds] = useState([]);
-
+  
   return (
     <StyledWrapper className="App">
       <Timeline
@@ -16,6 +17,7 @@ function App() {
         selectedCurrencyIds={selectedCurrencyIds}
         setSelectedCurrencyIds={setSelectedCurrencyIds}
       />
+      <BarChart/>
     </StyledWrapper>
   );
 }

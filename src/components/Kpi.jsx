@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import numeral from 'numeral';
 
+
 function Kpi({ currency, selectedCurrencyIds, setSelectedCurrencyIds }) {
   // Add function for formatting hour 09:00
   function addZero(i) {
@@ -92,6 +93,7 @@ function Kpi({ currency, selectedCurrencyIds, setSelectedCurrencyIds }) {
           {numeral(currency.trVolume).format('(0,0)')}
         </StyledNumber>
       </StyledRow>
+      
     </StyledWrapper>
   );
 }

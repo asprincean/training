@@ -1,0 +1,102 @@
+[
+    {
+      "country": "Finland",
+      "consumption": 12
+    },
+    {
+      "country": "Norway",
+      "consumption": 9.9
+    },
+    {
+      "country": "Iceland",
+      "consumption": 9
+    },
+    {
+      "country": "Denmark",
+      "consumption": 8.7
+    },
+    {
+      "country": "Netherlands",
+      "consumption": 8.4
+    },
+    {
+      "country": "Sweden",
+      "consumption": 8.16
+    },
+    {
+      "country": "Switzerland",
+      "consumption": 7.9
+    },
+    {
+      "country": "Belgium",
+      "consumption": 6.8
+    },
+    {
+      "country": "Luxembourg",
+      "consumption": 6.5
+    },
+    {
+      "country": "Canada",
+      "consumption": 6.5
+    },
+    {
+      "country": "Bosnia and Herzegovina",
+      "consumption": 6.2
+    },
+    {
+      "country": "Austria",
+      "consumption": 6.1
+    },
+    {
+      "country": "Italy",
+      "consumption": 5.9
+    },
+    {
+      "country": "Brazil",
+      "consumption": 5.8
+    },
+    {
+      "country": "Slovenia",
+      "consumption": 5.8
+    },
+    {
+      "country": "Germany",
+      "consumption": 5.5
+    },
+    {
+      "country": "Greece",
+      "consumption": 5.4
+    },
+    {
+      "country": "France",
+      "consumption": 5.4
+    },
+    {
+      "country": "Croatia",
+      "consumption": 5.1
+    },
+    {
+      "country": "Cyprus",
+      "consumption": 4.9
+    },
+    {
+      "country": "Lebanon",
+      "consumption": 4.8
+    },
+    {
+      "country": "Estonia",
+      "consumption": 4.5
+    },
+    {
+      "country": "Spain",
+      "consumption": 4.5
+    },
+    {
+      "country": "Portugal",
+      "consumption": 4.3
+    },
+    {
+      "country": "United States",
+      "consumption": 4.2
+    }
+  ]
