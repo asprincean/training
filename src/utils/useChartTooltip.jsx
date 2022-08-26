@@ -7,14 +7,11 @@ const useChartTooltip = () => {
 
   const handleTooltipShow = useCallback(
     (e, d) => {
-      setTooltipData({
-        visible: true,
-        time: d.time,
-        credit: d.credit,
-        debit: d.debit,
-        balance: d.balance,
-        elementRect: e.target.getBoundingClientRect(),
-      });
+      let data = d;
+
+      data.visible = true;
+      data.elementRect = e.target.getBoundingClientRect();
+      setTooltipData(data);
     },
     [setTooltipData]
   );

@@ -1,15 +1,22 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import KpiList from './components/KpiList';
 import Timeline from './components/Timeline';
 import ITF_Barchart from './components/ITF_barchart/ITF_Barchart';
 import ITF_BarchartData from './data/ITF_BarchartData';
-import { useState } from 'react';
+import CurrencyChart from './components/currencyChart/CurrencyChart';
+import currencyChartData from './data/currencyChartData';
 
 function App() {
   const [selectedCurrencyIds, setSelectedCurrencyIds] = useState([]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
       <StyledWrapper className="App">
         <Timeline
           selectedCurrencyIds={selectedCurrencyIds}
@@ -21,6 +28,7 @@ function App() {
         />
       </StyledWrapper>
       <ITF_Barchart data={ITF_BarchartData} />
+      <CurrencyChart data={currencyChartData} />
     </div>
   );
 }

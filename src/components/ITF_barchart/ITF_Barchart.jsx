@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import useResizeObserver from '../../utils/useResizeObserver';
 import useChartTooltip from '../../utils/useChartTooltip';
@@ -9,7 +9,7 @@ import XAxis from './XAxis';
 import Bar from './Bar';
 import Line from './Line';
 import CurrentTime from './CurrentTime';
-import Tooltip from './Tooltip';
+import ChartTooltip from '../ChartTooltip';
 import TooltipContents from './TooltipContents';
 import Legend from './Legend';
 import AxisLabel from './AxisLabel';
@@ -140,9 +140,9 @@ const ITF_Barchart = ({ data }) => {
     return new Date(startTime.setUTCHours(startTime.getUTCHours() + 15));
   };
 
-  const xValues = data.map((item) => item.time);
+  /* const xValues = data.map((item) => item.time);
   const yValuesCredit = data.map((item) => item.credit);
-  const yValuesDebit = data.map((item) => item.debit);
+  const yValuesDebit = data.map((item) => item.debit); */
 
   const xScale = d3
     .scaleUtc()
@@ -159,8 +159,6 @@ const ITF_Barchart = ({ data }) => {
     .range([innerHeightChart, 0]);
 
   const yTickFormat = (d) => `${d / 1000000}M`;
-
-  /* const xTickFormat = (d) => `${d.getHours()}:${d.getMinutes()}`; */
 
   const xTickFormat = (d) =>
     d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
@@ -274,7 +272,7 @@ const ITF_Barchart = ({ data }) => {
         ) : (
           <></>
         )}
-        <Tooltip
+        <ChartTooltip
           wrapperRef={wrapperRef}
           tooltipData={tooltipData}
           tooltipContents={<TooltipContents tooltipData={tooltipData} />}
