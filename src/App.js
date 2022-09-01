@@ -6,6 +6,8 @@ import ITF_Barchart from './components/ITF_barchart/ITF_Barchart';
 import ITF_BarchartData from './data/ITF_BarchartData';
 import CurrencyChart from './components/currencyChart/CurrencyChart';
 import currencyChartData from './data/currencyChartData';
+import WaterfallChart from './components/waterfallChart/WaterfallChart';
+import waterfallChartData from './data/waterfallChartData';
 
 function App() {
   const [selectedCurrencyIds, setSelectedCurrencyIds] = useState([]);
@@ -29,6 +31,7 @@ function App() {
       </StyledWrapper>
       <ITF_Barchart data={ITF_BarchartData} />
       <CurrencyChart data={currencyChartData} />
+      <WaterfallChart data={waterfallChartData} />
     </div>
   );
 }

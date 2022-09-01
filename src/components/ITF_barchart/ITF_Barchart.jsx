@@ -20,8 +20,6 @@ import DotsIcon from '../../assets/DotsIcon';
 const StyledOuterContainer = styled.div`
   display: flex;
   flex-direction: column;
-
-  height: 650px;
   margin: 1rem 12px 12px 12px;
 `;
 
