@@ -107,7 +107,7 @@ const StyledWrapper = styled.div`
   width: 95vw;
   height: 37px;
   background-color: #1d262c;
-  margin: 20px 0 30px 0;
+  margin: 45px 0 30px 0;
   border: #d7d8d65e solid 1px;
 `;
 
